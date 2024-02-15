@@ -52,3 +52,13 @@ with right_column:
                 st.write(text)
         except Exception as e:
             st.error(f"An error occurred: {e}")
+# Sidebar
+with st.sidebar:
+    st.header("Sidebar")
+    # Tombol berukuran besar
+    if st.button("Pengumpulan tugas", key="button1"):
+        st.write("Pengumpulan tugas")
+    if st.button("Pengumpulan ujian", key="button2"):
+        st.write("Pengumpulan ujian")
+    if st.button("Rekomendasi matkul", key="button3"):
+        st.write("Rekomendasi matkul")
