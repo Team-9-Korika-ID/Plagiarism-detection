@@ -6,13 +6,26 @@ import io
 # Layout
 st.set_page_config(layout="wide")
 
+# Just add it after st.sidebar:
+# a = st.sidebar.radio('Choose:',[1,2])
+
+st.title("Dolos")
+st.caption("Aplikasi untuk membaca teks dari file PDF atau ZIP")
+
+
 # Membagi layar menjadi dua kolom
 left_column, right_column = st.columns(2)
 
 # Input di kolom kiri
 with left_column:
     st.header("Input")
+    st.caption("Upload file PDF atau ZIP")
+    st.info('Datasets and reports older than 30 days may be deleted from our server to save space. You can always delete the data yourself.')
     uploaded_file = st.file_uploader("Upload file (zip/PDF)", type=["zip", "pdf"])
+    st.text_input('Text input')
+    st.multiselect('Multiselect', ['a', 'b', 'c'])
+    st.write('When you upload a dataset, it will be analyzed on our server. Only you and the people you share the report with will be able to view the analysis results.')
+    st.checkbox('I accept the terms and conditions')
 
 # Output di kolom kanan
 with right_column:
