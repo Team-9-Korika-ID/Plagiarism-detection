@@ -39,7 +39,7 @@ with right_column:
 
 st.write("")
 
-# Handling error if file cannot be read or processed
+# PDF to Text
 try:
     if uploaded_files is not None:
         for uploaded_file in uploaded_files:
@@ -67,9 +67,9 @@ except Exception as e:
 with st.sidebar:
     st.header("Sidebar")
     if st.button("Pengumpulan tugas [SISWA]", key="button0"):
-        st.write("Pengumpulan tugas")
+        st.write("Pengumpulan tugas [SISWA]")
     if st.button("Pengumpulan tugas [GURU]", key="button1"):
-        st.write("Pengumpulan tugas")
+        st.write("Pengumpulan tugas [GURU]")
     if st.button("Pengumpulan ujian", key="button2"):
         st.write("Pengumpulan ujian")
     if st.button("Rekomendasi matkul", key="button3"):
