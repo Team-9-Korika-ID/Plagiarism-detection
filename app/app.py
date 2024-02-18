@@ -63,6 +63,25 @@ try:
 except Exception as e:
     st.error(f"An error occurred: {e}")
 
+# Contents of ~/my_app/main_page.py
+import streamlit as st
+
+st.markdown("# Main page 🎈")
+st.sidebar.markdown("# Main page 🎈")
+
+# Contents of ~/my_app/pages/page_2.py
+import streamlit as st
+
+st.markdown("# Page 2 ❄️")
+st.sidebar.markdown("# Page 2 ❄️")
+
+# Contents of ~/my_app/pages/page_3.py
+import streamlit as st
+
+st.markdown("# Page 3 🎉")
+st.sidebar.markdown("# Page 3 🎉")
+
+'''
 # Sidebar
 with st.sidebar:
     st.header("Sidebar")
@@ -74,3 +93,4 @@ with st.sidebar:
         st.write("Pengumpulan ujian")
     if st.button("Rekomendasi matkul", key="button3"):
         st.write("Rekomendasi matkul")
+'''
