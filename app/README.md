@@ -1,0 +1,6 @@
+- Multipage = False
+- Table document UI = Blom fix
+- Image processing = False
+- PDFReader to variable = Blom
+- Set embedding = Blom
+- 
