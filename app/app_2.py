@@ -2,12 +2,8 @@ import streamlit as st
 from PyPDF2 import PdfReader
 import zipfile
 import pandas as pd
-import streamlit as st
 from dotenv import load_dotenv
-import os
 import google.generativeai as genai
-import fitz
-
 
 st.set_page_config(layout="wide")
 left_column, right_column = st.columns(2)
@@ -26,29 +22,47 @@ with left_column:
 with right_column:
     st.header("Output")
     # Tampilkan informasi file jika file telah diunggah
+    pdf_data = {"Text": {}, "Images": {}}
+
     if uploaded_files is not None:
-        df_files_info = pd.DataFrame(columns=["NRP", "Nama siswa", "Tipe file", "File size (bytes)"])
         for uploaded_file in uploaded_files:
-            # Informasi file
-            nama_dokumen = uploaded_file.name
-            nomor, teks = nama_dokumen.split('_', 1)
-            
-            file_info = {"NRP": nomor,
-                        "Nama siswa": teks,
-                        "Tipe file": uploaded_file.type, 
-                        "File size (bytes)": len(uploaded_file.read()),
-                        "Info": "✅"}
-            df_files_info = pd.concat([df_files_info, pd.DataFrame(file_info, index=[0])], ignore_index=True)
+            try:
+                if uploaded_file.type == "application/pdf":
+                    pdf_reader = PdfReader(uploaded_file)
+                    text = ""
+                    images = []
+                    for page_num in range(len(pdf_reader.pages)):
+                        page = pdf_reader.pages[page_num]
+                        text += page.extract_text()
+                        images += page.get_images(full=True)
+                    # Simpan informasi file PDF dalam dictionary dengan nama file sebagai kunci
+                    pdf_data["Text"][uploaded_file.name] = text
+                    pdf_data["Images"][uploaded_file.name] = images
+                elif uploaded_file.type == "application/zip":
+                    zip_file = zipfile.ZipFile(uploaded_file)
+                    for file_name in zip_file.namelist():
+                        if file_name.endswith('.txt'):
+                            with zip_file.open(file_name) as file:
+                                text = file.read().decode("utf-8")
+                                # Simpan informasi file dalam dictionary dengan nama file sebagai kunci
+                                pdf_data["Text"][file_name] = text
+            except Exception as e:
+                st.error(f"An error occurred: {e}")
 
+# DataFrame untuk teks dari PDF
+pdf_text_df = pd.DataFrame.from_dict(pdf_data["Text"], orient='index', columns=['Text'])
+if not pdf_text_df.empty:
+    st.header("Text from PDFs:")
+    st.dataframe(pdf_text_df)
 
-        if not df_files_info.empty:
-            st.write("Informasi file yang diinput:")
-            st.dataframe(df_files_info)
-            st.write("Judul Database:")
-            st.write(judul_database)
-
-
-st.write("")
+# DataFrame untuk gambar dari PDF
+pdf_image_df = pd.DataFrame(columns=['File Name', 'Page Number', 'Image'])
+for file_name, images in pdf_data["Images"].items():
+    for i, img in enumerate(images):
+        pdf_image_df = pdf_image_df.append({'File Name': file_name, 'Page Number': i+1, 'Image': img[0]}, ignore_index=True)
+if not pdf_image_df.empty:
+    st.header("Images from PDFs:")
+    st.dataframe(pdf_image_df)
 
 # PERHITUNGAN GATAU
 
