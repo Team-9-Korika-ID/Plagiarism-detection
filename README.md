@@ -3,6 +3,6 @@ This super app is a comprehensive source code plagiarism detection and preventio
 
 ## Who made this software?
 
-Dolos is an active research project by [Team 9](https://dodona.ugent.be/en/about/) at KORIKA AI Weekend Mentorship Program. If you use this software for your research, please cite:
+Dolos is an active research project by Team 9 at KORIKA AI Weekend Mentorship Program. If you use this software for your research, please cite:
 
 - Maertens et. al. (2022) J. Computer Assisted Learning [doi:10.1111/jcal.12662](https://doi.org/10.1111/jcal.12662)
