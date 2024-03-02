@@ -6,8 +6,6 @@ import streamlit as st
 from dotenv import load_dotenv
 import os
 import google.generativeai as genai
-import fitz
-
 
 st.set_page_config(layout="wide")
 left_column, right_column = st.columns(2)
@@ -100,4 +98,4 @@ except Exception as e:
 pdf_df = pd.DataFrame.from_dict(pdf_data, orient='index', columns=['Text'])
 if not pdf_df.empty:
     st.header("Text from PDFs:")
-    st.dataframe(pdf_df)
+    st.dataframe(pdf_df)    
