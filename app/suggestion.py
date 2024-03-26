@@ -9,7 +9,7 @@ def convert_pdf_to_text(pdf_file_path):
     return text
 
 # Example usage
-pdf_file_path = "D:/Jupyter lab/Plagiarism-detection/datasets/3323600054_Manusia berbatang.pdf"  # Replace with the path to your PDF file
+pdf_file_path = "D:/Jupyter lab/Plagiarism-detection/datasets/3323600054_Manusia berbatang.pdf"
 text = convert_pdf_to_text(pdf_file_path)
 
 ###

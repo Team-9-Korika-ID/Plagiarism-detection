@@ -6,6 +6,10 @@ import streamlit as st
 from dotenv import load_dotenv
 import os
 import google.generativeai as genai
+import seaborn as sns
+from sentence_transformers import SentenceTransformer, util
+import numpy as np
+import matplotlib.pyplot as plt
 
 st.set_page_config(layout="wide")
 left_column, right_column = st.columns(2)
@@ -31,6 +35,8 @@ with right_column:
             nama_dokumen = uploaded_file.name
             nomor, teks = nama_dokumen.split('_', 1)
             
+            teks = teks.replace('.pdf', '')
+
             file_info = {"NRP": nomor,
                         "Nama siswa": teks,
                         "Tipe file": uploaded_file.type, 
@@ -98,4 +104,24 @@ except Exception as e:
 pdf_df = pd.DataFrame.from_dict(pdf_data, orient='index', columns=['Text'])
 if not pdf_df.empty:
     st.header("Text from PDFs:")
-    st.dataframe(pdf_df)    
+    st.dataframe(pdf_df)
+    
+# Confution matrix
+kalimat = pdf_df['Text']
+num_sentences = len(kalimat)
+similarity_matrix = np.zeros((num_sentences, num_sentences))
+embeddings = SentenceTransformer('all-MiniLM-L6-v2').encode(kalimat.tolist(), convert_to_tensor=True)
+
+for i in range(num_sentences):
+    for j in range(i + 1, num_sentences):
+        similarity_matrix[i][j] = util.pytorch_cos_sim(embeddings[i], embeddings[j])
+        
+for i in range(num_sentences):
+    for j in range(0, i):
+        similarity_matrix[i][j] = similarity_matrix[j][i]
+        
+similarity_df = pd.DataFrame(similarity_matrix, columns=pdf_df.index, index=pdf_df.index)
+sns.heatmap(similarity_df, mask=np.zeros_like(similarity_df),
+            cmap=sns.diverging_palette(220, 10, as_cmap=True),
+            square=True, annot=True)
+st.pyplot(plt)

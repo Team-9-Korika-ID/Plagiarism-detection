@@ -1,30 +1,13 @@
-from PyPDF2 import PdfReader
-
-def convert_pdf_to_text(pdf_file_path):
-    pdf_reader = PdfReader(pdf_file_path)
-    text = ""
-    for page_num in range(len(pdf_reader.pages)):
-        page = pdf_reader.pages[page_num]
-        text += page.extract_text()
-    return text
-
-# Example usage
-pdf_file_path = "D:/Jupyter lab/Plagiarism-detection/datasets/3323600054_Manusia berbatang.pdf"
-text = convert_pdf_to_text(pdf_file_path)
-
-###
 import streamlit as st
 from dotenv import load_dotenv
 import os
 import google.generativeai as genai
+from PyPDF2 import PdfReader
 
 # load environment variables
 load_dotenv()
-
-# configure generativeai
 genai.configure(api_key="AIzaSyDiEvJyv_j5ZLMDt6E6lSM3ytQTqvWEpUE")
 
-# define function to generate content
 def generate_gemini_content(tulisan, prompt):
     model=genai.GenerativeModel("gemini-pro")
     response=model.generate_content(prompt+tulisan)
@@ -37,7 +20,18 @@ prompt1="""You are a teacher correcting a student's document. You will be readin
 prompt2='''You are a teacher correcting a student's document. You will read the text of an
 answer to a question and summarise the key points in 250 words. Provide corrections
 if there are words that are not correct, and provide criticism and suggestions.'''
-# streamlit app
+
+def convert_pdf_to_text(pdf_file_path):
+    pdf_reader = PdfReader(pdf_file_path)
+    text = ""
+    for page_num in range(len(pdf_reader.pages)):
+        page = pdf_reader.pages[page_num]
+        text += page.extract_text()
+    return text
+
+# Example usage
+pdf_file_path = "D:/Jupyter lab/Plagiarism-detection/datasets/3323600054_Manusia berbatang.pdf"
+text = convert_pdf_to_text(pdf_file_path)
 def main():
     st.title("Fine Tuningnya belum kelar")
     if st.button("Summarize"):
