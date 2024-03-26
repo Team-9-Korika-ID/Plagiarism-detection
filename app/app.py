@@ -54,7 +54,7 @@ st.write("")
 load_dotenv()
 
 # configure generativeai
-genai.configure(api_key="AIzaSyCYyr1lSjWLIck3sHkfnZiV3RLZd_e7qFc")
+genai.configure(api_key="AIzaSyDiEvJyv_j5ZLMDt6E6lSM3ytQTqvWEpUE")
 
 # define function to generate content
 def generate_gemini_content(tulisan, prompt):

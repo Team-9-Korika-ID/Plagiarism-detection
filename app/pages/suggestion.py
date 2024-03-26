@@ -1,15 +1,6 @@
 from PyPDF2 import PdfReader
 
 def convert_pdf_to_text(pdf_file_path):
-    """
-    Convert PDF file to plain text.
-    
-    Args:
-    pdf_file_path (str): Path to the PDF file.
-    
-    Returns:
-    str: Plain text extracted from the PDF.
-    """
     pdf_reader = PdfReader(pdf_file_path)
     text = ""
     for page_num in range(len(pdf_reader.pages)):
@@ -18,7 +9,7 @@ def convert_pdf_to_text(pdf_file_path):
     return text
 
 # Example usage
-pdf_file_path = "datasets/3323600054_Manusia berbatang.pdf"  # Replace with the path to your PDF file
+pdf_file_path = "D:/Jupyter lab/Plagiarism-detection/datasets/3323600054_Manusia berbatang.pdf"
 text = convert_pdf_to_text(pdf_file_path)
 
 ###
@@ -31,7 +22,7 @@ import google.generativeai as genai
 load_dotenv()
 
 # configure generativeai
-genai.configure(api_key="AIzaSyCYyr1lSjWLIck3sHkfnZiV3RLZd_e7qFc")
+genai.configure(api_key="AIzaSyDiEvJyv_j5ZLMDt6E6lSM3ytQTqvWEpUE")
 
 # define function to generate content
 def generate_gemini_content(tulisan, prompt):
@@ -49,7 +40,6 @@ if there are words that are not correct, and provide criticism and suggestions.'
 # streamlit app
 def main():
     st.title("Fine Tuningnya belum kelar")
-    text = st.text_area("Enter your text here")
     if st.button("Summarize"):
         prompt1="""You are a teacher correcting a student's document. You will be reading
         the answer text to a question and summarizing the key points within 250 words.
