@@ -56,11 +56,11 @@ st.write("")
 
 # PERHITUNGAN GATAU
 
-# load environment variables
 load_dotenv()
-
-# configure generativeai
-genai.configure(api_key="AIzaSyDiEvJyv_j5ZLMDt6E6lSM3ytQTqvWEpUE")
+os.getenv("GOOGLE_API_KEY")
+genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+#load_dotenv()
+#genai.configure(api_key="AIzaSyDiEvJyv_j5ZLMDt6E6lSM3ytQTqvWEpUE")
 
 # define function to generate content
 def generate_gemini_content(tulisan, prompt):
