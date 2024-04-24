@@ -115,5 +115,3 @@ pdf_df = pd.DataFrame.from_dict(pdf_data, orient='index', columns=['Text'])
 if not pdf_df.empty:
     st.header("Text from PDFs:")
     st.dataframe(pdf_df)
-    
-    
